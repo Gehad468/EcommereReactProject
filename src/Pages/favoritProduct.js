@@ -15,9 +15,12 @@ const FavoriteProducts = () => {
 
     return (
         <div className="container py-5 mb-5">
-            <h1 className="text-center py-5 " style={{ color: '#A27BAD' }}>Favorite Products</h1>
+            <h1 className="text-center py-5 "> </h1>
             <div>
                 <div className="row text-center">
+                {favorites.length === 0 ? (
+        <h3 style={{ color: '#a29BAD', fontFamily:'cursive' }}>Empty Wishlist!!</h3>
+      ) : (
                     <Table striped bordered hover >
                         <thead>
                             <tr>
@@ -39,7 +42,7 @@ const FavoriteProducts = () => {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table>
+                    </Table>)}
                 </div>
             </div>
         </div>

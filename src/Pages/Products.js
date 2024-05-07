@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { Pagination, InputGroup, FormControl } from 'react-bootstrap';
+import { Pagination, InputGroup, FormControl,Alert,Container } from 'react-bootstrap';
 
 import axios from 'axios';
 import { addToCart } from '../store/action/actions';
@@ -12,6 +12,7 @@ function Products() {
     const dispatch = useDispatch();
     const history = useHistory();
     const favorites = useSelector(state => state.favorites.favorites) || [];
+    const [showAlert, setShowAlert] = useState(false); // State to control alert visibility
 
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +20,7 @@ function Products() {
     const [searchQuery, setSearchQuery] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+
 
     useEffect(() => {
         axios.get(`https://dummyjson.com/product`)
@@ -30,6 +32,7 @@ function Products() {
             });
     }, []);
 
+ 
     const filteredProducts = products.filter(product =>
         product.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
         (minPrice === '' || parseFloat(product.price) >= parseFloat(minPrice)) &&
@@ -66,8 +69,10 @@ function Products() {
         if (storedUserData) {
             dispatch(addToCart(product));
         } else {
+            setShowAlert(true);
+
             console.log("User not logged in. Redirecting to login page.");
-            history.push('/login');
+            // history.push('/login');
         }
     };
 
@@ -86,54 +91,76 @@ function Products() {
 
     return (
         <div className="container py-5">
-            <div className="row mb-4 py-5">
-                <InputGroup className="col-md-6 mb-3">
-                    <FormControl
+             
+            <div className="row  py-5">
+                
+                <InputGroup className="col">
+                <FormControl className='inputstyle'
                         type="text"
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={handleInputChange}
                     />
-                </InputGroup>
-                <InputGroup className="col-md-3 mb-3">
-                    <FormControl
+                    <FormControl className='inputstyle'
                         placeholder="Min Price"
                         type="number"
                         value={minPrice}
                         onChange={handleMinPriceChange}
+
                     />
-                </InputGroup>
-                <InputGroup className="col">
-                    <FormControl
+                       <FormControl className='inputstyle'
                         placeholder="Max Price"
                         type="number"
                         value={maxPrice}
                         onChange={handleMaxPriceChange}
+
                     />
+                 
                 </InputGroup>
             </div>
+            {showAlert && (
+                <Container className='py-4'>
+                    <Alert variant="danger">Please login to add products to card.</Alert>
+                </Container>
+            )}
             <div className="row row-cols-1 row-cols-md-5 g-4">
                 {currentProducts.map((product) => (
                     <div className="col mb-4" key={product.id}>
-                        <div className="card h-100">
-                            <img onClick={() => handleProductClick(product.id)} style={{maxHeight:'12rem',minHeight:'8rem'}} src={product.images[0]} className="card-img-top" alt={product.title} />
+                        <div className="product-card card h-100">
+                            <img onClick={() => handleProductClick(product.id)} style={{ maxHeight: '12rem', minHeight: '8rem' }} src={product.images[0]} className="image-container card-img-top" alt={product.title} />
                             <div className="card-body d-flex flex-column justify-content-between">
-                                <h6 className="card-title">{product.title}</h6>
+                                <h5 className="card-title">{product.title}</h5>
                                 <div>
-                                    <p className="card-text">Rating: {product.rating}</p>
+
+                                    {/* <p className="card-text">Rating: {product.rating}</p> */}
                                     <p className="card-text">Price: {product.price}</p>
                                 </div>
+                                <ul className='star' type="none">
+                                    <li > <i className='fa fa-star checked'></i></li>
+                                    <li > <i className='fa fa-star checked'></i></li>
+                                    <li > <i className='fa fa-star checked'></i></li>
+                                    <li > <i className='fa fa-star checked'></i></li>
+                                    {product.rating > 4.5 ? (  <li><i className='fa fa-star checked'></i></li>
+                                    ) : product.rating > 4 ? ( <li><i className='fa fa-star-half-o checked'></i></li>
+                                    ) : ( <li><i className='fa fa-star'></i></li> )}
+                                </ul>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <span onClick={() => toggleFavorite(product)}>
                                         {favorites.some(item => item.id === product.id) ? <FaHeart color="#A27BAD" /> : <FaRegHeart color="#A27BAD" />}
                                     </span>
-                                    <button onClick={() => handleAddToCart(product)} style={{background:'#A27BAD', color:'white'}} className="btn ">Add to Cart</button>
+
+                                    <button onClick={() => handleAddToCart(product)} style={{ background: '#A27BAD', color: 'white' }} className="btn ">Add to Cart</button>
+                                    
                                 </div>
+
+
+                          
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+           
             <Pagination className="mt-4">
                 <Pagination.First onClick={() => goToPage(1)} disabled={currentPage === 1} />
                 <Pagination.Prev onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} />

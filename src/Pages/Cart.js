@@ -27,6 +27,10 @@ const Card = () => {
         <div className="container py-5 ">
             <div className="py-5">
                 <div className="row text-center">
+                {cart.length === 0 ? (
+        <h3 style={{ color: '#a29BAD', fontFamily:'cursive' }}>Empty Card!!</h3>
+      ) : (
+                    <div className="col-md-12">
                     <Button onClick={handleClearCart} variant='dark'>Clear</Button>
                     <Table striped="columns">
                         <thead>
@@ -56,8 +60,12 @@ const Card = () => {
                         </tbody>
                     </Table>
                 </div>
-            </div>
-            <strong style={{color:'#A27bad'}}>Total Price:</strong> {totalPrice} $
+      )
+    }
+      </div>
+      <strong  style={{color:'#A27bad' }}>Total Price:</strong> {totalPrice} $
+
+    </div>
         </div>
     );
 };

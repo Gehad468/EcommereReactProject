@@ -21,10 +21,9 @@ export default function App() {
       </MDBContainer>
 
       <div className='text-center p-3' style={{ backgroundColor: 'rgba(14, 12, 21,0.2)' }}>
-        © 2020 Copyright:
-        <a className='text-white' href='https://mdbootstrap.com/'>
-          MDBootstrap.com
-        </a>
+        © 2024 Copyright:
+        <a className='text-white' href='gehadmarawan7@gmail.com'> 
+ Contact Me</a>
       </div>
     </MDBFooter>
   );

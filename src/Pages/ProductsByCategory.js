@@ -23,14 +23,16 @@ function ProductsByCategory() {
       <Row className='py-5'>
         {products.map(product => (
           <Col key={product.id} xs={12} sm={5} md={3} lg={2.4} style={{ marginBottom: '1.1rem' }}>
-            <Card style={{ height: '100%' }}>
-              <Link to={`/ProductDetails/${product.id}`} style={{ height: '100%' }}>
-                <Card.Img variant="top" src={product.thumbnail} style={{ maxHeight: '10rem' }} />
+            <Link to={`/ProductDetails/${product.id}`} className='product-link'>
+              <Card className='product-card'>
+                <div className='image-container'>
+                  <Card.Img variant="top" src={product.thumbnail} className='product-image' />
+                </div>
                 <Card.Body>
                   <Card.Title>{product.title}</Card.Title>
                 </Card.Body>
-              </Link>
-            </Card>
+              </Card>
+            </Link>
           </Col>
         ))}
       </Row>

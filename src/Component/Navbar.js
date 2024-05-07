@@ -40,8 +40,11 @@ function NavbarComponent() {
                 <Navbar.Toggle aria-controls="navbarNav" className="custom-toggler " />
                 <Navbar.Collapse id="navbarNav">
                     <ul className="navbar-nav ms-auto">
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link className="nav-link" to="/" style={{ color: 'white' }}>Home</Link>
+                        </li> */}
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/products" style={{ color: 'white' }}>Products</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/login" style={{ color: 'white' }}>Login</Link>
@@ -49,16 +52,14 @@ function NavbarComponent() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/register" style={{ color: 'white' }}>Register</Link>
                         </li>
+                        
                         <li className="nav-item">
-                            <Link className="nav-link" to="/products" style={{ color: 'white' }}>Products</Link>
+                            <Link className="nav-link" to="/cart" style={{ color: 'white' }}><i className="fa fa-shopping-cart" ></i>  {cart.length}</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/cart" style={{ color: 'white' }}>Cart-{cart.length}</Link>
+                            <Link className="nav-link " to="/FavoriteProducts" style={{ color: 'white' }}><i className="fa fa-heart" ></i> {favorites.length}</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/FavoriteProducts" style={{ color: 'white' }}>Favorite-{favorites.length}</Link>
-                        </li>
-                        <NavDropdown title="Categories"  id="navbarScrollingDropdown">
+                        <NavDropdown  title="Categories"  id="navbarScrollingDropdown">
                             {categories.map(category => (
                                 <NavDropdown.Item as={Link} key={category} to={`/category/${category}`}>{category}</NavDropdown.Item>
                             ))}

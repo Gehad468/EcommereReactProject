@@ -1,6 +1,5 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
 const Login = () => {
     const validate = (values) => {
         const errors = {};
@@ -30,35 +29,44 @@ const Login = () => {
     };
 
     return (
-        <div className="container py-5" >
-            <div className="py-5">
-                <h1 style={{ color: '#A27bad' }} className='text-center'>Login</h1>
+        <div className="container py-5">
+            <div className="row py-5 g-0 align-items-center">
+                <div className="col-lg-6 py-5 mb-5 mb-lg-0">
+                    
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: '',
+                        }}
+                        validate={validate}
+                        onSubmit={handleSubmit}
+                    >
+                        {({ handleSubmit }) => (
+                            <Form onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <label htmlFor="email" className="form-label">Email address</label>
+                                    <Field type="email" id="email" name="email" className={`form-control`} />
+                                    <ErrorMessage name="email" component="div" className="text-danger" />
+                                </div>
+    
+                                <div className="mb-3">
+                                    <label htmlFor="password" className="form-label">Password</label>
+                                    <Field type="password" id="password" name="password" className={`form-control`} />
+                                    <ErrorMessage name="password" component="div" className="text-danger" />
+                                </div>
+                                <button type="submit" className="btn btn-outline-dark d-flex">Login</button>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+                <div className="col-lg-6 mb-5   p-2 mb-lg-0 ">
+                    <div >
+                        <img src="https://static.vecteezy.com/system/resources/previews/014/219/604/non_2x/safety-login-page-3d-illustration-free-png.png" className="img " height='400rem' alt="" />
+                    </div>
+                </div>
             </div>
-            <Formik
-                initialValues={{
-                    email: '',
-                    password: '',
-                }}
-                validate={validate}
-                onSubmit={handleSubmit}
-            >
-                <Form>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email address</label>
-                        <Field type="email" id="email" name="email" className={`form-control`} />
-                        <ErrorMessage name="email" component="div" className="text-danger" />
-                    </div>
-
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Password</label>
-                        <Field type="password" id="password" name="password" className={`form-control`} />
-                        <ErrorMessage name="password" component="div" className="text-danger" />
-                    </div>
-                    <button type="submit" className="btn btn-outline-primary">Login</button>
-                </Form>
-            </Formik>
         </div>
     );
-};
+}    
 
 export default Login;
